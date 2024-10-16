@@ -33,11 +33,11 @@ tts_configs: dict = {
         "seed": 3421734686
     },
     "rose": {
-        "config": create_config("./speakers/rose/rose-e20.ckpt", "./speakers/rose/rose_e12_s156.pth"),
+        "config": create_config("./speakers/rose/rose-e15.ckpt", "./speakers/rose/rose_e8_s88.pth"),
         "ref_audio_path": "./speakers/rose/sample.wav",
-        "prompt_text": "它的风压有一千，静压一千二，能够帮助你呢，率先抢占烟道冲顶直排，排烟顺畅，笼烟干净。",
+        "prompt_text": "想要吸烟排烟一步到位，直接选它，满足我们所有厨房的冷烟和吸烟排烟的需求。",
         "fragment_interval": 0.01,
-        "seed": 912000325
+        "seed": 2660631483
     }
 }
 
