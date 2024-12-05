@@ -65,7 +65,9 @@ def get_speaker_meta(speaker_name: str):
     speaker_meta_path = get_speaker_file(speaker_name, "meta.json")
     if os.path.exists(speaker_meta_path):
         with open(speaker_meta_path, 'r', encoding='utf-8') as file:
-            return json.load(file)
+            meta_dict =  json.load(file)
+            meta_dict["ref_audio_path"] = get_speaker_file(speaker_name, "sample.wav")
+            return meta_dict
     else:
         raise Exception(f"Speaker {speaker_name}'s meta does not exist")
 
@@ -256,14 +258,13 @@ async def tts_handle(req: dict):
 
             # _media_type = f"audio/{media_type}" if not (streaming_mode and media_type in ["wav", "raw"]) else f"audio/x-{media_type}"
             return StreamingResponse(streaming_generator(tts_generator, media_type, ), media_type=f"audio/{media_type}")
-
         else:
             sr, audio_data = next(tts_generator)
             audio_data = pack_audio(BytesIO(), audio_data, sr, media_type).getvalue()
             return Response(audio_data, media_type=f"audio/{media_type}")
     except Exception as e:
         logging.error(f"tts failed, {e}")
-        return JSONResponse(status_code=400, content={"message": f"tts failed", "Exception": str(e)})
+        return JSONResponse(status_code=200, content={"code": 500, "msg": str(e)})
 
 
 @app.post("/tts")
