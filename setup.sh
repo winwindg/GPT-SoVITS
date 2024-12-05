@@ -23,13 +23,6 @@ pip install /mnt/qnap/aigc/wheel/torch-2.1.1+cu118-cp39-cp39-linux_x86_64.whl
 pip install torchvision==0.16.1+cu118 torchaudio==2.1.1+cu118 --index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt
 
-# clean and init folders
-rm -rf *.bat
-rm -rf *.ps1
-rm -rf *.ipynb
-rm -rf Docker*
-rm -rf docker*
-
 mkdir -p input
 mkdir -p output/asr_opt
 mkdir -p output/denoise_opt
