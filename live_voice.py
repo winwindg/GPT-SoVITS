@@ -63,7 +63,7 @@ def get_tts_pipeline(speaker_name: str):
 
 def get_speaker_meta(speaker_name: str):
     speaker_meta_path = get_speaker_file(speaker_name, "meta.json")
-    if not os.path.exists(speaker_meta_path):
+    if os.path.exists(speaker_meta_path):
         with open(speaker_meta_path, 'r', encoding='utf-8') as file:
             return json.load(file)
     else:
