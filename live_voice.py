@@ -67,7 +67,7 @@ def get_speaker_meta(speaker_name: str):
         with open(speaker_meta_path, 'r', encoding='utf-8') as file:
             return json.load(file)
     else:
-        raise Exception(f"Speaker {speaker_name} does not exist")
+        raise Exception(f"Speaker {speaker_name}'s meta does not exist")
 
 
 def get_speaker_file(speaker_name: str, file_name: str):
@@ -91,7 +91,7 @@ def get_speaker_file(speaker_name: str, file_name: str):
     if response.status_code == 200:
         return download_file(speaker_url, local_path)
     else:
-        raise Exception(f"Speaker {speaker_name} does not exist")
+        raise Exception(f"Speaker {speaker_name}'s data does not exist")
 
 
 def download_file(url, file_path):
