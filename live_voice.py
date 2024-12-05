@@ -63,7 +63,11 @@ def get_tts_pipeline(speaker_name: str):
 
 def get_speaker_meta(speaker_name: str):
     speaker_meta_path = get_speaker_file(speaker_name, "meta.json")
-    return json.loads(speaker_meta_path)
+    if not os.path.exists(speaker_meta_path):
+        with open(speaker_meta_path, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    else:
+        raise Exception(f"Speaker {speaker_name} does not exist")
 
 
 def get_speaker_file(speaker_name: str, file_name: str):
@@ -87,7 +91,7 @@ def get_speaker_file(speaker_name: str, file_name: str):
     if response.status_code == 200:
         return download_file(speaker_url, local_path)
     else:
-        return None
+        raise Exception(f"Speaker {speaker_name} does not exist")
 
 
 def download_file(url, file_path):
@@ -104,7 +108,7 @@ def download_file(url, file_path):
         move_file(tmp_file_path, file_path)
         return file_path
     else:
-        return None
+        raise Exception(f"Download {url} failed, status_code={response.status_code}")
 
 
 def move_file(src_path, dest_path):
