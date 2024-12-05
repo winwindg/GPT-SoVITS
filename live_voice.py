@@ -7,6 +7,7 @@ import time
 from typing import Generator
 
 import requests
+import uvicorn
 
 import config
 
@@ -263,3 +264,7 @@ async def tts_handle(req: dict):
 @app.post("/tts")
 async def tts_post_endpoint(request: TTS_Request):
     return await tts_handle(request.model_dump())
+
+
+if __name__ == "__main__":
+    uvicorn.run(app=app, host="0.0.0.0", port=9880, workers=1)
