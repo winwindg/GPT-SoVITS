@@ -174,7 +174,7 @@ class TTS_Config:
         self.semantic_frame_rate:str = "25hz"
         self.segment_size:int = 20480
         self.filter_length:int = 2048
-        self.sampling_rate:int = 32000
+        self.sampling_rate:int = 16000
         self.hop_length:int = 640
         self.win_length:int = 2048
         self.n_speakers:int = 300
