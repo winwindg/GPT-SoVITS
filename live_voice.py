@@ -35,7 +35,7 @@ public_url = "https://meiyins.oss-cn-hangzhou.aliyuncs.com/speakers"
 cut_method_names = get_cut_method_names()
 v2_languages: list = ["auto", "auto_yue", "en", "zh", "ja", "yue", "ko", "all_zh", "all_ja", "all_yue", "all_ko"]
 tts_pipelines: dict = {}
-default_sample_rate = 16000
+default_sample_rate :int = 16000
 app = FastAPI()
 
 
