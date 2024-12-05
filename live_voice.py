@@ -46,7 +46,7 @@ def create_config(t2s_weights_path, vits_weights_path):
     tts_config.version = "v2"
     tts_config.bert_base_path = config.bert_path
     tts_config.cnhuhbert_base_path = config.cnhubert_path
-    tts_config.sampling_rate = default_sample_rate
+    tts_config.sampling_rate = 16000
     tts_config.t2s_weights_path = t2s_weights_path
     tts_config.vits_weights_path = vits_weights_path
     return tts_config
