@@ -57,7 +57,7 @@ def get_tts_pipeline(speaker_name: str):
     if speaker_name not in tts_pipelines:
         tts_config = create_config(get_speaker_file(speaker_name, "model.ckpt"), get_speaker_file(speaker_name, "model.pth"))
         tts = TTS(tts_config)
-        tts.configs.sampling_rate = default_sample_rate
+        #tts.configs.sampling_rate = default_sample_rate
         tts_pipelines[speaker_name] = tts
 
     return tts_pipelines[speaker_name]
