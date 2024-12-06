@@ -6,6 +6,7 @@ import sys
 import time
 from typing import Generator
 
+import librosa
 import requests
 import uvicorn
 
@@ -171,6 +172,8 @@ def pack_raw(io_buffer: BytesIO, data: np.ndarray, rate: int):
 
 def pack_wav(io_buffer: BytesIO, data: np.ndarray, rate: int):
     io_buffer = BytesIO()
+    if rate != default_sample_rate:
+        data = librosa.resample(data, rate, default_sample_rate)
     sf.write(io_buffer, data, rate, format='wav')
     return io_buffer
 
