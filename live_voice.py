@@ -6,7 +6,6 @@ import sys
 import time
 from typing import Generator
 
-import librosa
 import requests
 import uvicorn
 
@@ -36,7 +35,7 @@ public_url = "https://meiyins.oss-cn-hangzhou.aliyuncs.com/speakers"
 cut_method_names = get_cut_method_names()
 v2_languages: list = ["auto", "auto_yue", "en", "zh", "ja", "yue", "ko", "all_zh", "all_ja", "all_yue", "all_ko"]
 tts_pipelines: dict = {}
-default_sample_rate :int = 16000
+default_sample_rate: int = 16000
 app = FastAPI()
 
 
@@ -66,7 +65,7 @@ def get_speaker_meta(speaker_name: str):
     speaker_meta_path = get_speaker_file(speaker_name, "meta.json")
     if os.path.exists(speaker_meta_path):
         with open(speaker_meta_path, 'r', encoding='utf-8') as file:
-            meta_dict =  json.load(file)
+            meta_dict = json.load(file)
             meta_dict["ref_audio_path"] = get_speaker_file(speaker_name, "sample.wav")
             return meta_dict
     else:
@@ -171,9 +170,7 @@ def pack_raw(io_buffer: BytesIO, data: np.ndarray, rate: int):
 
 
 def pack_wav(io_buffer: BytesIO, data: np.ndarray, rate: int):
-    io_buffer = BytesIO()
-    if rate != default_sample_rate:
-        data = librosa.resample(data, rate, default_sample_rate)
+    # io_buffer = BytesIO()
     sf.write(io_buffer, data, rate, format='wav')
     return io_buffer
 
