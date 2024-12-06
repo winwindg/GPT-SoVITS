@@ -260,7 +260,7 @@ async def tts_handle(req: dict):
             return StreamingResponse(streaming_generator(tts_generator, media_type, ), media_type=f"audio/{media_type}")
         else:
             sr, audio_data = next(tts_generator)
-            audio_data = pack_audio(BytesIO(), audio_data, default_sample_rate, media_type).getvalue()
+            audio_data = pack_audio(BytesIO(), audio_data, sr, media_type).getvalue()
             return Response(audio_data, media_type=f"audio/{media_type}")
     except Exception as e:
         logging.error(f"tts failed, {e}")
