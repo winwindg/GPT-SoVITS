@@ -53,13 +53,20 @@ unit_dict = {
     "MS": "毫秒",
 
     # 计算机相关单位
-    "FPS": "帧每秒"
+    "FPS": "帧每秒",
+
+    # 其他单位
+    "+": "加",
 }
 
 regex_dict = [
     r"\d{4}\s*[年款]",
     r"\d+%"
 ]
+
+replace_dict = {
+    "+": "加"
+}
 
 
 def number_to_chinese(number: str):
@@ -103,5 +110,14 @@ def transcribe(text):
     # 添加匹配后的文本后面部分（如果有的话）
     result.append(text[last_end:])
 
+    rewritten_text = ''.join(result)
+    for k, v in replace_dict.items():
+        rewritten_text = rewritten_text.replace(k, v)
+
     # 返回替换后的完整文本
-    return ''.join(result)
+    return rewritten_text
+
+
+if __name__ == '__main__':
+    text = "鹿客2024款智能锁P7Pro，2024年新品，市占率99%，该款智能锁为142°超广角智能猫眼，1080P高清摄像头+纳米红外光夜视，500 mah电池"
+    print(transcribe(text))
