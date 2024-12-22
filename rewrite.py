@@ -59,8 +59,8 @@ unit_dict = {
     "+": "加",
 }
 
-regex_dict = [
-    r"\d{4}\s*[年款]",
+ignore_dict = [
+    r"[12]\d{3}\s*[年款]",
     r"\d+%"
 ]
 
@@ -84,6 +84,13 @@ def year_to_chinese(year: str):
 
 
 def transcribe(text):
+    # replace characters in replace_dict
+    for k, v in replace_dict.items():
+        text = text.replace(k, v)
+
+    regex_from_to = r'(\d+)\s*-\s*(\d+)'
+    text = re.sub(regex_from_to, r'\1至\2', text)
+
     regex_num_unit = r"(\d+\.?\d*)\s*([A-Za-z/°²³%\+]+|[\u4e00-\u9fa5])"
     result = []
 
@@ -93,31 +100,27 @@ def transcribe(text):
         unit = match.group(2)
 
         match_str = number + unit
-        if any(re.match(regex, match_str) for regex in regex_dict):
+        print(match_str)
+        if any(re.match(regex, match_str) for regex in ignore_dict):
             continue
 
-        # 将数字转为中文
+        # transform number to chinese
         chinese_number = number_to_chinese(number)
-        # 将单位转为中文
+        # transform unit to chinese
         unit = unit_dict.get(unit.upper(), unit)
 
-        # 添加文本中的替换部分
+        # append chinese number and unit to result list
         result.append(text[last_end:match.start()] + chinese_number + unit)
 
-        # 更新上一个匹配的结束位置
+        # update last position
         last_end = match.end()
 
-    # 添加匹配后的文本后面部分（如果有的话）
+    # add the rest of the text to result list
     result.append(text[last_end:])
 
-    rewritten_text = ''.join(result)
-    for k, v in replace_dict.items():
-        rewritten_text = rewritten_text.replace(k, v)
-
-    # 返回替换后的完整文本
-    return rewritten_text
+    return ''.join(result)
 
 
 if __name__ == '__main__':
-    text = "鹿客2024款智能锁P7Pro，2024年新品，市占率99%，该款智能锁为142°超广角智能猫眼，1080P高清摄像头+纳米红外光夜视，500 mah电池"
-    print(transcribe(text))
+    test_text = "鹿客2024款智能锁P7Pro，2023-2024范围，市占率99%，拥有142°超广角智能猫眼，1080P高清摄像头+纳米红外光夜视，500mah电池"
+    print(transcribe(test_text))
