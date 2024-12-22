@@ -77,7 +77,7 @@ def year_to_chinese(year: str):
 
 
 def transcribe(text):
-    regex_num_unit = r"(\d+\.?\d*)\s*([A-Za-z/°²³%]+|[\u4e00-\u9fa5])"
+    regex_num_unit = r"(\d+\.?\d*)\s*([A-Za-z/°²³%\+]+|[\u4e00-\u9fa5])"
     result = []
 
     last_end = 0
