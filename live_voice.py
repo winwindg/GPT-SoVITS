@@ -10,6 +10,7 @@ import requests
 import uvicorn
 
 import config
+import rewrite
 
 current_dir = os.getcwd()
 sys.path.append(current_dir)
@@ -244,6 +245,7 @@ async def tts_handle(req: dict):
             if key in req:
                 req[key] = meda_dict[key]
 
+        req["text"] = rewrite.transcribe(req["text"])
         tts_pipeline = get_tts_pipeline(req.get("speaker_name"))
         tts_generator = tts_pipeline.run(req)
         media_type = req.get("media_type")
